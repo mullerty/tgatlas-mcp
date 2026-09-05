@@ -1,3 +1,5 @@
+<img src="logo.png" alt="" width="88" align="right">
+
 # channelindex-mcp
 
 MCP server for public Telegram channels. Gives an agent a channel's real
