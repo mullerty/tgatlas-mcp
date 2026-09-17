@@ -1,6 +1,6 @@
 <img src="logo.png" alt="" width="88" align="right">
 
-# channelindex-mcp
+# tgatlas-mcp
 
 MCP server for public Telegram channels. Gives an agent a channel's real
 profile — subscribers, description, creation date, verification and scam
@@ -13,7 +13,7 @@ key and a Node runtime.
 ## Install
 
 ```bash
-npx channelindex-mcp
+npx tgatlas-mcp
 ```
 
 Claude Desktop / Claude Code / any MCP client:
@@ -21,9 +21,9 @@ Claude Desktop / Claude Code / any MCP client:
 ```json
 {
   "mcpServers": {
-    "channelindex": {
+    "tgatlas": {
       "command": "npx",
-      "args": ["-y", "channelindex-mcp"],
+      "args": ["-y", "tgatlas-mcp"],
       "env": { "TELEGRAM_API_KEY": "your-rapidapi-key" }
     }
   }
@@ -100,7 +100,7 @@ when `enrich: true` (capped at 12).
 
 ## Related
 
-[ChannelIndex](https://channelindex.org) publishes a weekly measured corpus
+[TgAtlas](https://tgatlas.org) publishes a weekly measured corpus
 built on the same API: channel directories by topic, the recommendation
 graph inverted into "who recommends this channel", and how those numbers
 move week to week.
