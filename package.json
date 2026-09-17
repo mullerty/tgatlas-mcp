@@ -1,6 +1,7 @@
 {
   "name": "tgatlas-mcp",
-  "version": "0.1.1",
+  "mcpName": "io.github.starnikovoleg/tgatlas",
+  "version": "0.1.2",
   "description": "MCP server for public Telegram channels — profiles, subscriber counts, posting cadence, and the channels Telegram itself considers similar.",
   "type": "module",
   "bin": {
@@ -34,9 +35,9 @@
   "homepage": "https://rapidapi.com/starnikovoleg/api/telegram155",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/starnikovoleg/-mcp.git"
+    "url": "git+https://github.com/starnikovoleg/tgatlas-mcp.git"
   },
   "bugs": {
-    "url": "https://github.com/starnikovoleg/-mcp/issues"
+    "url": "https://github.com/starnikovoleg/tgatlas-mcp/issues"
   }
 }

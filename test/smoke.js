@@ -58,7 +58,7 @@ const rpc = (method, params) =>
   });
 
 const init = await rpc('initialize', { protocolVersion: '2025-06-18', capabilities: {}, clientInfo: { name: 'smoke', version: '0' } });
-check('initialize responds', init.result?.serverInfo?.name === 'channelindex');
+check('initialize responds', init.result?.serverInfo?.name === 'tgatlas');
 check('declares capabilities.tools', !!init.result?.capabilities?.tools);
 
 const old = await rpc('initialize', { protocolVersion: '2024-11-05', capabilities: {} });

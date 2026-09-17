@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "tgatlas": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "tgatlas-mcp"
+      ],
+      "env": {
+        "TELEGRAM_API_KEY": "<your RapidAPI key>"
+      }
+    }
+  }
+}

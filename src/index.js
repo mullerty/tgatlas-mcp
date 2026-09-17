@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// ChannelIndex MCP server — stdio, JSON-RPC, no dependencies.
+// tgAtlas MCP server — stdio, JSON-RPC, no dependencies.
 //
 // Tools call the REST endpoints directly. The upstream bills per request, so
 // MCP handshakes are free here: you pay for Telegram lookups and nothing for
@@ -12,7 +12,7 @@ import { HOST } from './config.js';
 
 const PROTOCOL_VERSION = '2025-06-18';
 const SUPPORTED_PROTOCOLS = new Set([PROTOCOL_VERSION, '2025-03-26', '2024-11-05']);
-const SERVER_INFO = { name: 'channelindex', title: 'ChannelIndex — public Telegram channels', version: '0.1.0' };
+const SERVER_INFO = { name: 'tgatlas', title: 'tgAtlas — public Telegram channels', version: '0.1.2' };
 
 // Enriching with exact counts costs one call per channel. The cap keeps a
 // single tools/call within a predictable price.
@@ -184,4 +184,4 @@ process.stdin.on('end', () => {
 process.on('SIGINT', () => process.exit(0));
 process.on('SIGTERM', () => process.exit(0));
 
-process.stderr.write(`channelindex-mcp ${SERVER_INFO.version} → ${HOST}\n`);
+process.stderr.write(`tgatlas-mcp ${SERVER_INFO.version} → ${HOST}\n`);
