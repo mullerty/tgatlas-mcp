@@ -6,7 +6,7 @@
 // initialize or tools/list.
 
 import { idOf, fullChannel, recommendations, searchChannels, history, handleOf, GatewayError } from './client.js';
-import { renderChannel, renderList, cadence } from './markdown.js';
+import { renderChannel, renderList, renderPosts, cadence } from './markdown.js';
 import { TOOLS } from './tools.js';
 import { HOST } from './config.js';
 
@@ -79,10 +79,26 @@ async function toolSearch(args) {
   return text(renderList(`Public channels matching “${args.query}”`, chats));
 }
 
+async function toolPosts(args) {
+  const chat = await idOf(args.channel);
+  const raw = await history(chat.id);
+  const all = raw?.messages ?? [];
+  // The gateway decides the page size; the limit is a ceiling on what the
+  // model reads, not a request for more than one page.
+  const limit = Number.isInteger(args.limit) ? Math.min(Math.max(args.limit, 1), 100) : 20;
+  const messages = all.slice(0, limit);
+
+  if (args.format === 'json') return text(asJson({ channel: chat.username || chat.id, returned: messages.length, available: all.length, messages }));
+
+  const note = all.length > messages.length ? `Showing ${messages.length} of ${all.length} posts on this page.` : '';
+  return text(renderPosts(chat, messages, note));
+}
+
 const HANDLERS = {
   telegram_channel: { run: toolChannel, requires: 'channel' },
   telegram_similar_channels: { run: toolSimilar, requires: 'channel' },
   telegram_search_channels: { run: toolSearch, requires: 'query' },
+  telegram_channel_posts: { run: toolPosts, requires: 'channel' },
 };
 
 async function callTool(name, args = {}) {
@@ -123,7 +139,7 @@ async function dispatch(msg) {
         instructions:
           'Public Telegram channels. telegram_channel for a profile and whether it is still alive, ' +
           'telegram_similar_channels to discover neighbours Telegram itself groups together, ' +
-          'telegram_search_channels to find a starting point. Message contents are out of scope.',
+          'telegram_search_channels to find a starting point, telegram_channel_posts to read what a \n          channel actually publishes.',
       });
     }
     case 'notifications/initialized':

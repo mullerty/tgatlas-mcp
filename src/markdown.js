@@ -70,3 +70,32 @@ export function renderList(heading, chats = [], note = '') {
   if (note) out.push('', note);
   return out.join('\n');
 }
+
+/**
+ * Post bodies. Upstream reads history only for dates (see `cadence`); this
+ * renders the text as well, which is the whole point of reading a channel
+ * without an account. Field names are defensive: the gateway mirrors MTProto,
+ * where the body lives in `message`, but a wrapper may call it `text`.
+ */
+export function renderPosts(chat, messages = [], note = '') {
+  const handle = chat.username || chat.id;
+  const out = [`# @${esc(handle)} — posts`, ''];
+  if (!messages.length) {
+    out.push('_No posts returned._', '', note || 'The channel may be empty, or history may be closed to non-members.');
+    return out.join('\n');
+  }
+  for (const m of messages) {
+    const body = String(m?.message ?? m?.text ?? '').trim();
+    const stamp = day(m?.date) ?? '????-??-??';
+    const meta = [
+      Number.isFinite(m?.views) && `${num(m.views)} views`,
+      Number.isFinite(m?.forwards) && `${num(m.forwards)} forwards`,
+    ].filter(Boolean).join(' · ');
+    const link = m?.id ? ` — [link](https://t.me/${chat.username || ''}/${m.id})` : '';
+    out.push(`## ${stamp}${meta ? ` · ${meta}` : ''}${link}`);
+    // A media-only post has no body; saying so beats an empty section.
+    out.push(body || '_(no text — media or service message)_', '');
+  }
+  if (note) out.push(note);
+  return out.join('\n');
+}

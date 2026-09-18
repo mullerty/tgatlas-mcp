@@ -68,7 +68,7 @@ child.stdin.write(JSON.stringify({ jsonrpc: '2.0', method: 'notifications/initia
 
 const list = await rpc('tools/list');
 const names = (list.result?.tools ?? []).map((t) => t.name);
-check('tools/list returns three tools', names.length === 3, names.join(', '));
+check('tools/list returns four tools', names.length === 4, names.join(', '));
 check('schemas are closed', list.result.tools.every((t) => t.inputSchema.additionalProperties === false));
 check('every tool is marked read-only', list.result.tools.every((t) => t.annotations?.readOnlyHint === true));
 

@@ -72,4 +72,23 @@ export const TOOLS = [
     },
     annotations: ANNOTATIONS,
   },
+  {
+    name: 'telegram_channel_posts',
+    title: 'Recent posts of a public channel',
+    description:
+      'Read the recent posts of a public Telegram channel: date, text, views and a t.me link per ' +
+      'post. Reads through the gateway, so no Telegram account is involved and bulk reading carries ' +
+      'no account risk. Returns whatever page the gateway serves — for a full archive or for search ' +
+      'inside a channel, use an MTProto server instead.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        ...CHANNEL,
+        limit: { type: 'integer', minimum: 1, maximum: 100, description: 'How many of the most recent posts to return. Default 20.' },
+      },
+      required: ['channel'],
+      additionalProperties: false,
+    },
+    annotations: ANNOTATIONS,
+  },
 ];
